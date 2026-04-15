@@ -1,122 +1,41 @@
 # 🧠 HealthAI Platform
 
-HealthAI is a web-based collaboration platform that connects **Engineers** and **Healthcare Professionals (Doctors)** to build innovative AI-powered healthcare solutions.
+A web-based collaboration platform connecting **Engineers** and **Doctors** to build AI-powered healthcare solutions.
+
+---
+
+## 🌐 Live Demo (Frontend)
+
+👉 https://health-ai-platform.vercel.app/
+
+⚠️ This demo represents the **frontend prototype** of the system.
 
 ---
 
 ## 🚀 Features
 
-### 👤 User System
-
-* Register/Login with `.edu` email
-* Role-based system:
-
-  * 🧑‍💻 Engineer
-  * 🩺 Doctor (with specialization)
+* Role-based system (Engineer / Doctor)
+* Post creation & browsing
+* Collaboration request system
+* Meeting scheduling (date, time, link)
+* Dashboard with activity overview
 
 ---
 
-### 📌 Post System
-
-* Users can create posts
-* Doctors define **medical fields**
-* Engineers define **AI methods**
-* Posts are visible to all users
-
----
-
-### 📩 Request System
-
-* Users can send collaboration requests
-* Request includes:
-
-  * Message
-  * Sender info
-  * Field compatibility
-
----
-
-### 📅 Meeting System
-
-* Requests can be **accepted/rejected**
-* When accepted:
-
-  * Meeting date & time selected
-  * Meeting link added (Zoom / Google Meet)
-* Users can join meetings directly
-
----
-
-### 📊 Dashboard
-
-* Overview cards:
-
-  * My Posts
-  * Incoming Requests
-  * Meetings
-* Clickable navigation system
-
----
-
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 * React (Vite)
-* JavaScript (ES6+)
-* CSS (custom UI)
-* LocalStorage (state persistence)
-* Docker 🐳
-
----
-
-## 🐳 Run with Docker
-
-```bash
-# Build image
-docker build -t healthai-app .
-
-# Run container
-docker run -p 5173:5173 healthai-app
-```
-
-👉 Open in browser:
-
-```
-http://localhost:5173
-```
-
----
-
-## 📁 Project Structure
-
-```
-health-ai-platform/
-│
-├── backend/
-├── docs/
-├── frontend/   ← React + Docker app
-│   ├── src/
-│   ├── public/
-│   ├── Dockerfile
-│   ├── package.json
-```
+* JavaScript
+* CSS
+* LocalStorage
+* Docker
 
 ---
 
 ## ⚠️ Notes
 
-* Latest development version is on the **dev branch**
-* This project is a prototype for collaboration workflow
-* Data is stored locally using LocalStorage
-
----
-
-## 💡 Future Improvements
-
-* Backend integration (Node.js / Spring Boot)
-* Database (PostgreSQL)
-* Real-time chat system
-* Advanced filtering & search
-* Deployment (AWS / Vercel)
+* Latest version is available in the `dev` branch
+* This is a frontend-based prototype (no backend integration yet)
 
 ---
 
@@ -124,5 +43,3 @@ health-ai-platform/
 
 Ecem Tüysüz
 Gizem Fatma Kılıç
-
----
