@@ -1,45 +1,39 @@
-# 🧠 HealthAI Platform
+# HealthAI Frontend
 
-A web-based collaboration platform connecting **Engineers** and **Doctors** to build AI-powered healthcare solutions.
-
----
-
-## 🌐 Live Demo (Frontend)
-
-👉 https://health-ai-platform.vercel.app/
-
-⚠️ This demo represents the **frontend prototype** of the system.
+This is the frontend part of the HealthAI Platform, a web-based system that connects engineers and healthcare professionals to collaborate on AI-driven healthcare projects.
 
 ---
 
-## 🚀 Features
+## Features
 
-* Role-based system (Engineer / Doctor)
-* Post creation & browsing
-* Collaboration request system
-* Meeting scheduling (date, time, link)
-* Dashboard with activity overview
+* User authentication interface (Login / Register)
+* Role-based pages (Engineer / Doctor / Admin)
+* Dashboard with search functionality
+* Create and manage posts
+* Profile and request tracking pages
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * React (Vite)
-* JavaScript
+* React Router
+* Context API
 * CSS
-* LocalStorage
-* Docker
 
 ---
 
-## ⚠️ Notes
+## Run Locally
 
-* Latest version is available in the `dev` branch
-* This is a frontend-based prototype (no backend integration yet)
+```bash
+npm install
+npm run dev
+```
+
+Open: http://localhost:5173
 
 ---
 
-## 👩‍💻 Authors
+## Status
 
-Ecem Tüysüz
-Gizem Fatma Kılıç
+Frontend is under development and integrated with the backend locally.
