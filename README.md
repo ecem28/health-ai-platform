@@ -10,6 +10,8 @@ This is the **final integrated version** of the HealthAI platform, combining fro
 ⚠️ Note:
 The deployed version currently includes only the frontend.
 Backend services run locally via Docker, so some features (e.g., authentication, API calls) may not function in the live demo.
+⚠️ Backend is not deployed.  
+The full system runs locally using Docker.
 
 ## 🚀 Project Overview
 
