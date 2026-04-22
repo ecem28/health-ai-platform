@@ -3,6 +3,13 @@
 This is the **final integrated version** of the HealthAI platform, combining frontend, backend, and containerized deployment into a complete system.
 
 ---
+## 🌐 Live Demo (Frontend)
+
+👉 https://health-ai-platform.vercel.app/
+
+⚠️ Note:
+The deployed version currently includes only the frontend.
+Backend services run locally via Docker, so some features (e.g., authentication, API calls) may not function in the live demo.
 
 ## 🚀 Project Overview
 
