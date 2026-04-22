@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { updateProfile, exportUserData, deleteAccount } from '../services/authService';
 import { getPosts, updatePostStatus } from '../services/postService';
 import { getUserMeetings, updateMeetingStatus } from '../services/meetingService';
 import { FileText, Inbox, Send, Calendar, Check, X as XIcon, Clock } from 'lucide-react';
@@ -22,6 +23,8 @@ const Profile = () => {
   const [myPosts, setMyPosts] = useState([]);
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [outgoingRequests, setOutgoingRequests] = useState([]);
+  const [editData, setEditData] = useState({ name: '', university: '', domain: '' });
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const loadData = async () => {
     try {
@@ -40,6 +43,11 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       loadData();
+      setEditData({
+        name: user.name || '',
+        university: user.university || '',
+        domain: user.domain || ''
+      });
     }
   }, [user]);
 
@@ -58,6 +66,49 @@ const Profile = () => {
       loadData();
     } catch (err) {
       alert(err.message);
+    }
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    try {
+      await updateProfile(editData);
+      alert('Profile updated successfully!');
+      // Refresh the page to reload the user context
+      window.location.reload();
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleExportData = async () => {
+    try {
+      const data = await exportUserData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `healthai_export_${user.id}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      if (window.confirm("FINAL WARNING: All your posts and meeting requests will be permanently deleted. Proceed?")) {
+        try {
+          await deleteAccount();
+          navigate('/');
+        } catch (err) {
+          alert(err.message);
+        }
+      }
     }
   };
 
@@ -92,6 +143,13 @@ const Profile = () => {
               style={{ background: activeTab === 'outgoing' ? 'rgba(255,255,255,0.1)' : 'transparent', border: 'none', color: activeTab === 'outgoing' ? 'white' : 'var(--text-secondary)', padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             >
               <Send size={18} /> Outgoing Requests
+            </button>
+            <hr style={{ borderColor: 'var(--border-color)', margin: '0.5rem 0' }} />
+            <button 
+              onClick={() => setActiveTab('settings')}
+              style={{ background: activeTab === 'settings' ? 'rgba(255,255,255,0.1)' : 'transparent', border: 'none', color: activeTab === 'settings' ? 'white' : 'var(--text-secondary)', padding: '0.75rem 1rem', borderRadius: '8px', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <FileText size={18} /> Account Settings
             </button>
           </div>
         </div>
@@ -223,6 +281,58 @@ const Profile = () => {
                 })}
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'settings' && (
+          <div className="animate-fade-in glass-panel" style={{ padding: '2rem' }}>
+            <h3 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>Account Settings</h3>
+            
+            <form onSubmit={handleUpdateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '500px', marginBottom: '3rem' }}>
+              <div className="form-group">
+                <label className="form-label">Email (Read-only)</label>
+                <input type="email" className="form-input" value={user.email} disabled style={{ opacity: 0.7, cursor: 'not-allowed' }} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Role</label>
+                <input type="text" className="form-input" value={user.role} disabled style={{ opacity: 0.7, cursor: 'not-allowed' }} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Full Name</label>
+                <input type="text" className="form-input" value={editData.name} onChange={(e) => setEditData({...editData, name: e.target.value})} required />
+              </div>
+              <div className="form-group">
+                <label className="form-label">University / Institute</label>
+                <input type="text" className="form-input" value={editData.university} onChange={(e) => setEditData({...editData, university: e.target.value})} required />
+              </div>
+              {user.role === 'Healthcare Professional' || user.role === 'Engineer' ? (
+                <div className="form-group">
+                  <label className="form-label">Domain</label>
+                  <select className="form-input form-select" value={editData.domain} onChange={(e) => setEditData({...editData, domain: e.target.value})} required>
+                    <option value="" disabled>Select Domain</option>
+                    <option value="Cardiology Imaging">Cardiology Imaging</option>
+                    <option value="Neurology AI">Neurology AI</option>
+                    <option value="Surgical Robotics">Surgical Robotics</option>
+                    <option value="Digital Therapeutics">Digital Therapeutics</option>
+                    <option value="Orthopedic Tech">Orthopedic Tech</option>
+                    <option value="General HealthTech">General HealthTech</option>
+                  </select>
+                </div>
+              ) : null}
+              <button type="submit" className="btn btn-primary" disabled={isUpdating}>
+                {isUpdating ? 'Saving...' : 'Update Profile'}
+              </button>
+            </form>
+
+            <h3 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem', color: 'var(--text-secondary)' }}>Data Management</h3>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <button onClick={handleExportData} className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <FileText size={16} /> Export My Data (JSON)
+              </button>
+              <button onClick={handleDeleteAccount} className="btn btn-danger" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', borderColor: 'rgba(239, 68, 68, 0.3)', color: 'var(--accent-danger)' }}>
+                <XIcon size={16} /> Delete Account Permanently
+              </button>
+            </div>
           </div>
         )}
       </div>

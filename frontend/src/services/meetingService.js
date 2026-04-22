@@ -66,3 +66,18 @@ export const updateMeetingStatus = async (meetingId, newStatus, proposedTime = n
   logEvent(user.id, user.role, 'MEETING_UPDATE', `meeting_${meetingId}`, 'SUCCESS', { newStatus });
   return data;
 };
+
+export const markMeetingAsRead = async (meetingId) => {
+  const user = getCurrentUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const response = await fetch(`/api/meetings/${meetingId}/read`, {
+    method: 'PUT',
+    headers: getHeaders()
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to mark as read');
+  }
+  return await response.json();
+};

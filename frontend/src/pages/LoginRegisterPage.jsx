@@ -13,7 +13,8 @@ const LoginRegisterPage = () => {
     name: '',
     email: '',
     password: '',
-    role: 'Engineer'
+    role: 'Engineer',
+    university: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -141,6 +142,18 @@ const LoginRegisterPage = () => {
                   <option value="Orthopedic Tech">Orthopedic Tech</option>
                   <option value="General HealthTech">General HealthTech</option>
                 </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">University / Institute</label>
+                <input 
+                  type="text" 
+                  name="university" 
+                  className="form-input" 
+                  placeholder="e.g. Stanford University"
+                  value={formData.university || ''} 
+                  onChange={handleChange} 
+                  required 
+                />
               </div>
             </>
           )}

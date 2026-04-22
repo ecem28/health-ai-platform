@@ -59,3 +59,51 @@ export const getAllUsers = async () => {
 export const toggleUserStatus = async (userId, isActive) => {
   return false;
 };
+
+export const updateProfile = async (profileData) => {
+  const token = getToken();
+  const response = await fetch('/api/users/me', {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(profileData)
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to update profile');
+  }
+  const data = await response.json();
+  
+  // Update local storage user data
+  const user = getCurrentUser();
+  if (user) {
+    const updatedUser = { ...user, ...data };
+    localStorage.setItem('healthai_current_user', JSON.stringify(updatedUser));
+  }
+  return data;
+};
+
+export const exportUserData = async () => {
+  const token = getToken();
+  const response = await fetch('/api/users/me/export', {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  if (!response.ok) {
+    throw new Error('Failed to export data');
+  }
+  return await response.json();
+};
+
+export const deleteAccount = async () => {
+  const token = getToken();
+  const response = await fetch('/api/users/me', {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete account');
+  }
+  logoutUser();
+};

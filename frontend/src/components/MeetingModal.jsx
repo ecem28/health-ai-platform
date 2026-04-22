@@ -45,7 +45,10 @@ const MeetingModal = ({ post, onClose, onSuccess }) => {
             <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>You are requesting a meeting regarding:</p>
             <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
               <h3 style={{ margin: 0, fontSize: '1.1rem' }}>{post.title}</h3>
-              <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>{post.domain}</p>
+              <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem', marginTop: '0.25rem', marginBottom: 0 }}>
+                {post.domain}
+                {post.authorName && <span style={{ marginLeft: '0.5rem', borderLeft: '1px solid var(--border-color)', paddingLeft: '0.5rem' }}>Posted by: <strong style={{ color: 'var(--text-secondary)' }}>{post.authorName}</strong></span>}
+              </p>
             </div>
           </div>
 

@@ -29,11 +29,16 @@ const PostCard = ({ post, onClick }) => {
             Seeking: <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>{post.desiredExpertise}</span>
           </p>
         </div>
-        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '8px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '8px', textAlign: 'center' }}>
           {post.authorRole === 'Engineer' ? (
             <span style={{ fontSize: '0.8rem', color: '#60a5fa', fontWeight: '600' }}>ENG</span>
           ) : (
             <span style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: '600' }}>MED</span>
+          )}
+          {post.authorName && (
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={post.authorName}>
+              {post.authorName}
+            </div>
           )}
         </div>
       </div>
