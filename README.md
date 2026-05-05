@@ -1,5 +1,12 @@
 # 🧠 HealthAI Platform – Final Full Integration
 
+## 🎬 Demo Video
+
+👉 https://www.youtube.com/watch?v=-LvZPypuy_c
+
+---
+
+
 ## 🚀 Project Overview
 
 HealthAI is a web-based collaboration platform designed to connect **Engineers** and **Healthcare Professionals** to co-create innovative healthcare solutions.
@@ -132,11 +139,6 @@ This repository contains the **fully integrated final version** of the system:
 
 ---
 
-## 🎬 Demo Video
-
-👉 (Video link will be added here)
-
----
 
 ## 🎓 Course Information
 
