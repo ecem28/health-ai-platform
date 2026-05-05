@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    container_name: healthai_backend
+    ports:
+      - "5000:5000"
+    volumes:
+      # Map the db folder to a Docker volume to persist SQLite data
+      - sqlite_data:/app/db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+    container_name: healthai_frontend
+    ports:
+      # Map container's port 80 (Nginx) to host's port 5173
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
