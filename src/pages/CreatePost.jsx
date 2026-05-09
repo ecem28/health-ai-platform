@@ -103,16 +103,82 @@ const CreatePost = () => {
                   </select>
                 </div>
               </div>
-              <div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: 1 }}>
-                  <label className="form-label">Country</label>
-                  <input type="text" name="country" className="form-input" value={formData.country} onChange={handleChange} required />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <label className="form-label">City</label>
-                  <input type="text" name="city" className="form-input" value={formData.city} onChange={handleChange} required />
-                </div>
-              </div>
+              
+<div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
+  <div style={{ flex: 1 }}>
+    <label className="form-label">Country</label>
+
+    <select
+      name="country"
+      className="form-input form-select"
+      value={formData.country}
+      onChange={(e) => {
+        setFormData({
+          ...formData,
+          country: e.target.value,
+          city: ''
+        });
+      }}
+      required
+    >
+      <option value="">Select Country</option>
+
+      <option value="Turkey">Turkey</option>
+      <option value="Germany">Germany</option>
+      <option value="USA">USA</option>
+      <option value="UK">UK</option>
+    </select>
+  </div>
+
+  <div style={{ flex: 1 }}>
+    <label className="form-label">City</label>
+
+    <select
+      name="city"
+      className="form-input form-select"
+      value={formData.city}
+      onChange={handleChange}
+      required
+    >
+      <option value="">Select City</option>
+
+      {formData.country === 'Turkey' && (
+        <>
+          <option value="Ankara">Ankara</option>
+          <option value="İstanbul">İstanbul</option>
+          <option value="İzmir">İzmir</option>
+          <option value="Bursa">Bursa</option>
+        </>
+      )}
+
+      {formData.country === 'Germany' && (
+        <>
+          <option value="Berlin">Berlin</option>
+          <option value="Munich">Munich</option>
+          <option value="Hamburg">Hamburg</option>
+        </>
+      )}
+
+      {formData.country === 'USA' && (
+        <>
+          <option value="New York">New York</option>
+          <option value="Chicago">Chicago</option>
+          <option value="Los Angeles">Los Angeles</option>
+        </>
+      )}
+
+      {formData.country === 'UK' && (
+        <>
+          <option value="London">London</option>
+          <option value="Manchester">Manchester</option>
+          <option value="Liverpool">Liverpool</option>
+        </>
+      )}
+    </select>
+  </div>
+</div>
+
+
             </div>
           )}
 
